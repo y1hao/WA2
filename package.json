@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/CoderYihaoWang/WA2/issues"
   },
-  "homepage": "https://github.com/CoderYihaoWang/WA2#readme"
+  "homepage": "https://github.com/CoderYihaoWang/WA2#readme",
+  "dependencies": {
+    "commander": "^6.1.0"
+  }
 }
