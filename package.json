@@ -1,0 +1,23 @@
+{
+  "name": "WA2",
+  "version": "0.1.0",
+  "description": "WA2: a cli tool to quickly look up AWS services",
+  "main": "index.js",
+  "bin": {
+    "wa2": "bin/index"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CoderYihaoWang/WA2.git"
+  },
+  "keywords": [],
+  "author": "Yihao Wang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CoderYihaoWang/WA2/issues"
+  },
+  "homepage": "https://github.com/CoderYihaoWang/WA2#readme"
+}
