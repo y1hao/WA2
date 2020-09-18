@@ -8,22 +8,26 @@ function main() {
     program.arguments('[query...]')
         .action(actions.query)
     
-    program.option('-n, --name [query...]')
+    program.option('-t, --title [query...]')
         .action(actions.queryInName)
 
     program.option('-c, --content [query...]')
         .action(actions.queryInContent)
 
+    program.option('-l, --list [letter]')
+        .action(actions.list)
+
     program.option('-u, --update')
-        .action()
+        .action(actions.update)
 
     program.option('-r, --revert [id]')
-        .action()
+        .action(actions.revert)
     
     program.option('-g, --glossary')
-        .action()
+        .action(actions.glossary)
 
-    program.option('')
+    program.option('-a, --any')
+        .action(actions.random)
     
 
     program.parse(process.argv)

@@ -3,6 +3,14 @@ module.exports = {
 
     },
 
+    revert: function() {
+
+    },
+
+    glossary: function() {
+
+    },
+
     query: function(name) {
         console.log('querying: ', ...name)
     },
