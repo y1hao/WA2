@@ -3,8 +3,8 @@ module.exports = {
 
     },
 
-    query: function() {
-
+    query: function(name) {
+        console.log('querying: ', ...name)
     },
 
     queryInName: function() {
