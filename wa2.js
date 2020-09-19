@@ -17,8 +17,8 @@ function main() {
 
     program.command('update')
         .usage('- generate a new glossary list from the AWS glossary page, to keep the search results up to date')
-        .option('-l, --list', 'list all the available versions of glossaries')
-        .option('-r, --revert [id]', 'revert to a particular version of glossary, or the last one if [id] is not given')
+        .option('-s, --show', 'show all the available versions of glossaries')
+        .option('-R, --revert [id]', 'revert to a particular version of glossary, or the last one if [id] is not given')
         .action(actions.update)
 
     program.parse(process.argv)
