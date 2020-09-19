@@ -2,7 +2,7 @@
   "name": "WA2",
   "version": "0.1.0",
   "description": "WA2: a cli tool to quickly look up AWS services",
-  "main": "index.js",
+  "main": "wa2.js",
   "bin": {
     "wa2": "bin/index"
   },

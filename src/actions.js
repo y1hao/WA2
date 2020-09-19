@@ -1,33 +1,11 @@
 module.exports = {
-    update: function() {
-
-    },
-
-    revert: function() {
-
-    },
-
-    glossary: function() {
-
-    },
-
-    query: function(name) {
+    query: function(name, cmd) {
         console.log('querying: ', ...name)
+        if (cmd.title)
+            console.log('title')
     },
 
-    queryInName: function() {
-
-    },
-
-    queryInContent: function() {
-
-    },
-
-    list: function() {
-
-    },
-
-    random: function() {
-
+    update: function(cmd) {
+        if (cmd.revert) console.log(cmd.revert)
     }
 }
