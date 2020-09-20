@@ -26,7 +26,11 @@ function queryExact(query) {
             }
         }
     }
-    console.log(`Cannot find entries with the name '${HIGHLIGHT + query.join(' ') + RESET}'`)
+    console.log(`Cannot find the item with the name '${HIGHLIGHT + query.join(' ') + RESET}'`)
+    console.log()
+    console.log(`Try use ${HIGHLIGHT}'wa2 ${query.join(' ')} -t'${RESET} to search in titles`)
+    console.log(`     Or ${HIGHLIGHT}'wa2 ${query.join(' ')} -c'${RESET} to search in contents`)
+    console.log()
 }
 
 function queryInTitle(query) {
