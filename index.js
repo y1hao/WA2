@@ -28,10 +28,6 @@ function main() {
         .description('List items with the initial letter')
         .action(actions.list)
 
-    program.command('acronym <query>')
-        .description('Search for items with the specified acronym')
-        .action(actions.acronym)
-
     program.parse(process.argv)
 }
 
