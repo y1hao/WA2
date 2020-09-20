@@ -1,5 +1,4 @@
 const getGlossary = require('./getGlossary')
-const fs = require('fs')
 
 module.exports = () => {
     const glossary = getGlossary()

@@ -9,7 +9,11 @@ module.exports = (cmd) => {
     if (cmd.list) {
         list()
     } else if (cmd.revert) {
-        use(cmd.revert)
+        if (cmd.revert === true) {
+            revert()
+        } else {
+            use(cmd.revert)
+        }
     } else if (cmd.delete){
         remove(cmd.delete)
     } else {
@@ -40,6 +44,23 @@ function create() {
             console.log(`Created and using a new glossary (#${id}, creation time: ${creationTime}) `)
         }
     )
+}
+
+function revert() {
+    if (config.currentVersion === 0) {
+        console.log('Already using the initial glossary.')
+        return
+    }
+    let i = 0
+    for (; i < config.glossaries.length; i++) {
+        if (config.glossaries[i].id >= config.currentVersion) {
+            break
+        }
+    }
+    const glossary = config.glossaries[i - 1]
+    config.currentVersion = glossary.id
+    fs.writeFileSync(`${__dirname}/../config.json`, JSON.stringify(config, null, 2))
+    console.log(`Revert to glossary list #${glossary.id} (creation time: ${glossary.creationTime})`)
 }
 
 function use(idString) {

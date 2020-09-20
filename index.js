@@ -24,8 +24,8 @@ function main() {
         .description('Show a random item')
         .action(actions.random)
 
-    program.command('list [letter]')
-        .description('List items with the initial letter, or all services if the initial is not given')
+    program.command('list <initial>')
+        .description('List items with the initial letter')
         .action(actions.list)
 
     program.command('acronym <query>')
