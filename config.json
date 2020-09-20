@@ -1,15 +1,10 @@
 {
-  "currentVersion": 1,
+  "currentVersion": 0,
   "glossaries": [
     {
       "id": 0,
       "fileName": "init.json",
       "creationTime": "2020-09-20T00:00:00Z"
-    },
-    {
-      "id": 1,
-      "fileName": "_20200920T105952563Z.json",
-      "creationTime": "2020-09-20T10:59:52.563Z"
     }
   ]
 }

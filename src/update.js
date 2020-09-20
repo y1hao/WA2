@@ -86,7 +86,13 @@ function remove(idString) {
         console.error('Cannot remove the initial glossary')
         return
     }
+    const removed = config.glossaries.filter(g => g.id === id)[0]
+    if (!removed) {
+        console.error(`The glossary with id ${HIGHLIGHT +'#' + id + RESET} does not exist.`)
+        return
+    }
     config.glossaries = config.glossaries.filter(g => g.id !== id)
+    fs.unlinkSync(`${__dirname}/../assets/${removed.fileName}`)
     console.log(`Removed glossary ${HIGHLIGHT +'#' + id + RESET}.`)
     if (config.currentVersion === id) {
         config.currentVersion = config.glossaries[config.glossaries.length - 1].id
