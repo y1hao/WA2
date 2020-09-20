@@ -1,3 +1,5 @@
+const wordwrap = require('wordwrapjs')
+
 const BOLD = '\u001b[1m'
 const UNDERLINE = '\u001b[4m'
 const YELLOW = '\u001b[33m'
@@ -16,7 +18,7 @@ function single(item) {
 
     console.group()
     console.log()
-    console.log(item.description)
+    console.log(wordwrap.wrap(item.description, {width: 70}))
     console.groupEnd()
 
     if (item.names.length > 1) {
