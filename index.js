@@ -17,6 +17,7 @@ function main() {
         .description('Generate a new glossary list from the AWS glossary page, to keep the search results up to date')
         .option('-l, --list', 'List all the available versions of glossaries')
         .option('-r, --revert [id]', 'Revert to a particular version of glossary, or the last one if [id] is not given')
+        .option('-d, --delete <id>', 'Delete a particular version of glossary')
         .action(actions.update)
 
     program.command('random')

@@ -10,31 +10,78 @@ module.exports = (cmd) => {
         list()
     } else if (cmd.revert) {
         use(cmd.revert)
+    } else if (cmd.delete){
+        remove(cmd.delete)
     } else {
         create()
     }
 }
 
 function create() {
+    console.log('Fetching data from', AWS_GLOSSARY_PAGE_URI, '...')
     request(
         { uri: AWS_GLOSSARY_PAGE_URI },
         function(error, response, body) {
             if (error) {
                 console.error(error)
+                return
             }
+            console.log('Generating glossary ...')
             const glossary = makeGlossary(body)
-            console.log(glossary)
+            const creationTime = new Date()
+            const fileName = `_${creationTime.toISOString().replace(/[.:-]/g, '')}.json`
+            console.log('Saving results ...')
+            fs.writeFileSync(`${__dirname}/../assets/${fileName}`, JSON.stringify(glossary, null, 2))
+            console.log('Using the new glossary ...')
+            const id = config.glossaries[config.glossaries.length - 1].id + 1
+            config.glossaries.push( {id, fileName, creationTime} )
+            config.currentVersion = id
+            fs.writeFileSync(`${__dirname}/../config.json`, JSON.stringify(config, null, 2))
+            console.log(`Created and using a new glossary (#${id}, creation time: ${creationTime}) `)
         }
     )
 }
 
 function use(idString) {
     const id = Number.parseInt(idString)
+    for (let i = 0; i < config.glossaries.length; i++) {
+        if (id === config.glossaries[i].id) {
+            config.currentVersion = id
+            fs.writeFileSync(`${__dirname}/../config.json`, JSON.stringify(config, null, 2))
+            const creationTime = config.glossaries[id].creationTime
+            console.log(`Using glossary list #${id} (creation time: ${creationTime})`)
+            return
+        }
+    }
+    console.error(`Error: cannot find glossary list with id ${id}.`)
+    console.log('Use may use \'wa2 update --list\' to view all available glossary lists.')
+}
 
-
-    console.log('Using glossary #', id)
+function remove(id) {
+    if (id === 0) {
+        console.error('Cannot remove the initial glossary')
+        return
+    }
+    config.glossaries = config.glossaries.filter(g => g.id !== id)
+    console.log(`Removed glossary #${id}.`)
+    if (config.currentVersion === id) {
+        config.currentVersion = config.glossaries[config.glossaries.length - 1]
+        console.log(`Now using glossary #${config.currentVersion}`)
+    }
+    fs.writeFileSync(`${__dirname}/../config.json`, JSON.stringify(config, null, 2))
+    console.log('You may use \'wa2 update --list\' to view all available glossary lists')
 }
 
 function list() {
-    console.log('Listing glossaries')
+    const list = config.glossaries.slice()
+    list.sort((a, b) => Date.parse(b.creationTime) - Date.parse(a.creationTime))
+    console.log(`\t\tId\tCreated`)
+    for (const g of config.glossaries) {
+        const row = `\t${g.id}\t${g.creationTime}`
+        if (g.id === config.currentVersion) {
+            console.log('\t*' + row)
+        } else {
+            console.log('\t' + row)
+        }
+    }
 }
