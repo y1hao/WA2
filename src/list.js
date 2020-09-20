@@ -1,4 +1,5 @@
 const getGlossary = require('./getGlossary')
+const display = require('./display')
 
 module.exports = (initial) => {
     if (initial.length !== 1) {
@@ -12,8 +13,5 @@ module.exports = (initial) => {
     } else {
         list = glossary
     }
-
-    for (const g of list) {
-        console.log(g.title)
-    }
+    display.list(list.map(g => g.title))
 }

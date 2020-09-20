@@ -19,7 +19,7 @@ function queryExact(query) {
     for (const g of glossary) {
         for (const n of g.names) {
             if (key === n.toLowerCase()) {
-                display(g)
+                display.single(g)
                 return
             }
         }
@@ -28,6 +28,9 @@ function queryExact(query) {
 }
 
 function queryInTitle(query) {
+
+    console.log(`Searching for items containing '${query.join(' ')}' in titles ...`)
+
     const glossary = getGlossary()
     const key = query.join(' ').toLowerCase()
     const result = []
@@ -39,16 +42,15 @@ function queryInTitle(query) {
         }
     }
     result.sort()
-    for (const n of result) {
-        console.log(n)
-    }
+    display.list(result)
 }
 
 function queryInContent(query) {
+
+    console.log(`Searching for items containing '${query.join(' ')}' in contents ...`)
+
     const glossary = getGlossary()
     const key = query.join(' ').toLowerCase()
     const result = glossary.filter(g => g.description.toLowerCase().includes(key))
-    for (const g of result) {
-        console.log(g.title)
-    }
+    display.list(result.map(g => g.title))
 }

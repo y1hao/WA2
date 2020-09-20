@@ -1,12 +1,11 @@
 const BOLD = '\u001b[1m'
 const UNDERLINE = '\u001b[4m'
-const MAGENTA = '\u001b[35m'
 const YELLOW = '\u001b[33m'
 const CYAN = '\u001b[36m'
 const BLUE = '\u001b[34m'
 const RESET = '\u001b[0m'
 
-module.exports = (item) => {
+function single(item) {
     console.log()
 
     console.group()
@@ -36,10 +35,28 @@ module.exports = (item) => {
         console.log()
         console.group()
         for (const r of item.references) {
-            console.log(r)
+            if (r.startsWith('https://')) {
+                console.log(r)
+            } else {
+                console.log(CYAN + r + RESET)
+            }
         }
         console.groupEnd()
     }
     console.groupEnd()
     console.log()
 }
+
+function list(items) {
+    console.group()
+    console.log(CYAN)
+    for (const item of items) {
+        console.log(item)
+    }
+    console.log()
+    console.log(`${YELLOW}${items.length} item(s) found in total.${RESET}`)
+    console.log()
+    console.groupEnd()
+}
+
+module.exports = { single, list }

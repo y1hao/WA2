@@ -3,6 +3,8 @@ const makeGlossary = require('./makeGlossary')
 const request = require('request')
 const fs = require('fs')
 
+const GREEN = '\u001b[32m'
+const RESET = '\u001b[0m'
 const AWS_GLOSSARY_PAGE_URI = 'https://docs.aws.amazon.com/general/latest/gr/glos-chap.html'
 
 module.exports = (cmd) => {
@@ -36,7 +38,6 @@ function create() {
             const fileName = `_${creationTime.toISOString().replace(/[.:-]/g, '')}.json`
             console.log('Saving results ...')
             fs.writeFileSync(`${__dirname}/../assets/${fileName}`, JSON.stringify(glossary, null, 2))
-            console.log('Using the new glossary ...')
             const id = config.glossaries[config.glossaries.length - 1].id + 1
             config.glossaries.push( {id, fileName, creationTime} )
             config.currentVersion = id
@@ -78,7 +79,8 @@ function use(idString) {
     console.log('Use may use \'wa2 update --list\' to view all available glossary lists.')
 }
 
-function remove(id) {
+function remove(idString) {
+    const id = Number.parseInt(idString)
     if (id === 0) {
         console.error('Cannot remove the initial glossary')
         return
@@ -86,7 +88,7 @@ function remove(id) {
     config.glossaries = config.glossaries.filter(g => g.id !== id)
     console.log(`Removed glossary #${id}.`)
     if (config.currentVersion === id) {
-        config.currentVersion = config.glossaries[config.glossaries.length - 1]
+        config.currentVersion = config.glossaries[config.glossaries.length - 1].id
         console.log(`Now using glossary #${config.currentVersion}`)
     }
     fs.writeFileSync(`${__dirname}/../config.json`, JSON.stringify(config, null, 2))
@@ -100,7 +102,7 @@ function list() {
     for (const g of config.glossaries) {
         const row = `\t${g.id}\t${g.creationTime}`
         if (g.id === config.currentVersion) {
-            console.log('\t*' + row)
+            console.log(GREEN + '\t*' + row + RESET)
         } else {
             console.log('\t' + row)
         }
