@@ -1,3 +1,8 @@
+const getGlossary = require('./getGlossary')
+const fs = require('fs')
+
 module.exports = () => {
-    console.log('Showing a random result')
+    const glossary = getGlossary()
+    const index = Math.floor(Math.random() * glossary.length) 
+    console.log(glossary[index])
 }
