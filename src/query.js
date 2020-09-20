@@ -1,5 +1,7 @@
 const getGlossary = require('./getGlossary')
 const display = require('./display')
+const HIGHLIGHT = '\u001b[93m'
+const RESET = '\u001b[0m'
 
 module.exports = (query, cmd) => {
     if (cmd.title) {
@@ -24,12 +26,12 @@ function queryExact(query) {
             }
         }
     }
-    console.log('Cannot find entries with the name', query)
+    console.log(`Cannot find entries with the name '${HIGHLIGHT + query.join(' ') + RESET}'`)
 }
 
 function queryInTitle(query) {
 
-    console.log(`Searching for items containing '${query.join(' ')}' in titles ...`)
+    console.log(`Searching for items containing '${HIGHLIGHT + query.join(' ') + RESET}' in titles ...`)
 
     const glossary = getGlossary()
     const key = query.join(' ').toLowerCase()
@@ -47,7 +49,7 @@ function queryInTitle(query) {
 
 function queryInContent(query) {
 
-    console.log(`Searching for items containing '${query.join(' ')}' in contents ...`)
+    console.log(`Searching for items containing '${HIGHLIGHT + query.join(' ') + RESET}' in contents ...`)
 
     const glossary = getGlossary()
     const key = query.join(' ').toLowerCase()

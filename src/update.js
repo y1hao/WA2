@@ -4,6 +4,7 @@ const request = require('request')
 const fs = require('fs')
 
 const GREEN = '\u001b[32m'
+const HIGHLIGHT = '\u001b[93m'
 const RESET = '\u001b[0m'
 const AWS_GLOSSARY_PAGE_URI = 'https://docs.aws.amazon.com/general/latest/gr/glos-chap.html'
 
@@ -42,7 +43,7 @@ function create() {
             config.glossaries.push( {id, fileName, creationTime} )
             config.currentVersion = id
             fs.writeFileSync(`${__dirname}/../config.json`, JSON.stringify(config, null, 2))
-            console.log(`Created and using a new glossary (#${id}, creation time: ${creationTime}) `)
+            console.log(`Created and using a new glossary (${HIGHLIGHT +'#' + id + RESET}, creation time: ${creationTime.toISOString()}) `)
         }
     )
 }
@@ -61,7 +62,7 @@ function revert() {
     const glossary = config.glossaries[i - 1]
     config.currentVersion = glossary.id
     fs.writeFileSync(`${__dirname}/../config.json`, JSON.stringify(config, null, 2))
-    console.log(`Revert to glossary list #${glossary.id} (creation time: ${glossary.creationTime})`)
+    console.log(`Revert to glossary list ${HIGHLIGHT +'#' + glossary.id + RESET} (creation time: ${glossary.creationTime})`)
 }
 
 function use(idString) {
@@ -71,12 +72,12 @@ function use(idString) {
             config.currentVersion = id
             fs.writeFileSync(`${__dirname}/../config.json`, JSON.stringify(config, null, 2))
             const creationTime = config.glossaries[id].creationTime
-            console.log(`Using glossary list #${id} (creation time: ${creationTime})`)
+            console.log(`Using glossary list ${HIGHLIGHT +'#' + id + RESET} (creation time: ${creationTime})`)
             return
         }
     }
     console.error(`Error: cannot find glossary list with id ${id}.`)
-    console.log('Use may use \'wa2 update --list\' to view all available glossary lists.')
+    console.log(`You may use ${HIGHLIGHT}\'wa2 update --list\'${RESET} to view all available glossary lists`)
 }
 
 function remove(idString) {
@@ -86,13 +87,13 @@ function remove(idString) {
         return
     }
     config.glossaries = config.glossaries.filter(g => g.id !== id)
-    console.log(`Removed glossary #${id}.`)
+    console.log(`Removed glossary ${HIGHLIGHT +'#' + id + RESET}.`)
     if (config.currentVersion === id) {
         config.currentVersion = config.glossaries[config.glossaries.length - 1].id
         console.log(`Now using glossary #${config.currentVersion}`)
     }
     fs.writeFileSync(`${__dirname}/../config.json`, JSON.stringify(config, null, 2))
-    console.log('You may use \'wa2 update --list\' to view all available glossary lists')
+    console.log(`You may use ${HIGHLIGHT}\'wa2 update --list\'${RESET} to view all available glossary lists`)
 }
 
 function list() {
