@@ -13,7 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/CoderYihaoWang/WA2.git"
   },
-  "keywords": [],
+  "keywords": ["AWS", "Amazon Web Services", "wa2"],
   "author": "Yihao Wang",
   "license": "ISC",
   "bugs": {
